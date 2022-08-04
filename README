@@ -9,7 +9,7 @@ goes into shell with basic commands.
 
 =======  Unix Design =======
 
-- You can add device drivers like Linux kernel
+- You can add (modprobe, insmod, delmod etc.) device drivers like Linux kernel
 - Exception: Using micro kernel, no extra services
 - Targetting to use ELF executable system
 
