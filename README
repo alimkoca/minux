@@ -1,0 +1,27 @@
+Minimalist x86 hobby operating systems that 
+goes into shell with basic commands.
+
+=======  Minimalism  =======
+
+- Based on minimalism with basic commands
+- No target system or hardware
+- Just run and enjoy your little system
+
+=======  Unix Design =======
+
+- You can add device drivers like Linux kernel
+- Exception: Using micro kernel, no extra services
+- Targetting to use ELF executable system
+
+=======   Why not?  =======
+
+- Why I don't make a OS? it's learning process
+- Indeed, it's amateur design, but I'm college student
+- Hobbies are always good
+
+------   Resources  -------
+
+- Linux Device Drivers, 3rd Edition
+- Operating System Concepts
+- Operating Systems: Three Easy Pieces
+- The Design of UNIX Operating System
