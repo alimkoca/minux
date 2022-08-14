@@ -24,3 +24,30 @@ goes into shell with basic commands.
 - Operating System Concepts
 - Operating Systems: Three Easy Pieces
 - The Design of UNIX Operating System
+
+------     Note     -------
+
+If you want to make with bootloader ( GRUB)
+set your own configuration file and required things.
+
+====== Installation =======
+
+```
+$ mkdir -p iso/boot/grub
+...
+$ # Note: Make your own configuration file in (note: file isn't created)
+$ # iso/boot/grub/grub.cfg
+...
+$ # and type make in project directory
+$ make
+Building kernel objects...
+make all -C kernel
+make[1]: Entering directory '/home/alim/Yazılım/minux/kernel'
+gcc -ffreestanding -nostdlib -m32 -O2 -lgcc -mno-sse -mno-sse2 -c main.c init.c mem.c panic.c vmem.c video.c isr.c io.c string.c -I ../include
+make[1]: Leaving directory '/home/alim/Yazılım/minux/kernel'
+Building arch objects...
+make all -C arch
+make[1]: Entering directory '/home/alim/Yazılım/minux/arch'
+...
+$ # And finally ready! Start qemu and use.
+```
