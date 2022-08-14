@@ -1,6 +1,6 @@
 CC = gcc
-CC_ARGS = -ffreestanding -nostdlib -m32 -O2 -lgcc
-CC_DEP = main.c init.c mem.c vmem.c video.c isr.c string.c
+CC_ARGS = -ffreestanding -nostdlib -m32 -O2 -lgcc -mno-sse -mno-sse2
+CC_DEP = main.c init.c mem.c panic.c vmem.c video.c isr.c io.c string.c
 
 .PHONY : all
 
