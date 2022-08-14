@@ -76,5 +76,5 @@ void set_idt_tbl(){
 }
 
 void int_hndlr(){
-	put_str("Ohh my god", 15);
+	printf("minux: interrupt handler\n");
 }
