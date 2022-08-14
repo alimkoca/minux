@@ -1,6 +1,9 @@
 CC = gcc
-CC_ARGS = -T linker.ld -ffreestanding -nostdlib -m32 -O2 -lgcc
-OBJ = arch/x86/boot_x86.o arch/x86/mem.o arch/x86/vmem.o arch/x86/isr.o kernel/main.o kernel/init.o kernel/video.o kernel/vmem.o kernel/mem.o kernel/isr.o kernel/string.o
+CC_ARGS = -T linker.ld -ffreestanding -nostdlib -m32 -O2 -lgcc -mno-sse -mno-sse2
+OBJ = arch/x86/boot_x86.o arch/x86/mem.o arch/x86/vmem.o arch/x86/isr.o \
+      kernel/main.o kernel/init.o kernel/video.o kernel/vmem.o \
+      kernel/mem.o kernel/isr.o kernel/io.o kernel/string.o \
+      kernel/panic.o
 
 .PHONY : kernel
 
