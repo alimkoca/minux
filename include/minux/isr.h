@@ -27,6 +27,13 @@ struct idt_entry_mnx {
 	u16 bs_h;
 } __attribute__((packed));
 
+struct int_stats_mnx {
+	u32 ds;
+	u32 edi, esi, ebp, esp, edx, ecx, eax;
+	u32 int_n, errno;
+	u32 eip, cs, eflags, uesp, ss;
+} __attribute__((packed));
+
 /*
  * IDT set table and vector
  */
