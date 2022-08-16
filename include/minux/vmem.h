@@ -4,6 +4,6 @@
 #include <std/type.h>
 
 extern void en_virt_mem(u32 pgaddr);
-void set_page_dtp();
+void bit32_pg_enable();
 
 #endif

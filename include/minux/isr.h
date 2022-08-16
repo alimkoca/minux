@@ -28,10 +28,10 @@ struct idt_entry_mnx {
 } __attribute__((packed));
 
 struct int_stats_mnx {
-	u32 ds;
-	u32 edi, esi, ebp, esp, edx, ecx, eax;
-	u32 int_n, errno;
-	u32 eip, cs, eflags, uesp, ss;
+	u32 ds; // Data segment
+	u32 edi, esi, ebp, esp, ebx, edx, ecx, eax; // All general purpose registers
+	u32 int_n, errno; // Errno and int no
+	u32 eip, cs, eflags, uesp, ss; // Others...
 } __attribute__((packed));
 
 /*
@@ -39,6 +39,13 @@ struct int_stats_mnx {
  */
 static void set_idt();
 void set_idt_tbl();
+
+/*
+ * Setting interrupt gates
+ * for interrupt vector list
+ * min: 0, max: 255
+ */
+void interrupt_desc_opt(u8 elem, u32 bs, u16 ss, u8 attr);
 
 extern void int_elem_0();
 extern void int_elem_1();

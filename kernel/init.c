@@ -1,5 +1,6 @@
 #include <minux/init.h>
 #include <minux/isr.h>
+#include <minux/io.h>
 #include <minux/mem.h>
 #include <minux/vmem.h>
 #include <minux/video.h>
@@ -13,9 +14,13 @@ int init_proc(){
 	printf("minux: protected mode\n");
 	en_prot_mode();
 	// Enable paging and virtual memory
-	printf("minux: paging\n");
-	set_page_dtp();
+	printf("minux: 32 bit paging\n");
+	bit32_pg_enable();
 
+	outb(0xa, 0xb);
+	if (inb(0xa) > 0){
+		printf("minux: perfect");
+	}
 	for (;;){
 		asm volatile ("hlt");
 	}
