@@ -1,5 +1,6 @@
-
 #include <minux/isr.h>
+#include <minux/irq.h>
+#include <minux/io.h>
 #include <minux/video.h>
 #include <std/string.h>
 #include <std/type.h>
@@ -15,20 +16,6 @@ extern void load_idt_mnx(u32 idt_pointer_addr);
  */
 struct idt_ptr_mnx idt_ptr_mnx_st;
 struct idt_entry_mnx idt_entry_mnx_st[256];
-
-/*
- * Setting interrupt gates
- * for interrupt vector list
- * min: 0, max: 255
- */
-static void interrupt_desc_opt(u8 elem, u32 bs, u16 ss, u8 attr){
-	idt_entry_mnx_st[elem].bs_l = bs & 0xFFFF;
-	idt_entry_mnx_st[elem].bs_h = (bs >> 16) & 0xFFFF;
-
-	idt_entry_mnx_st[elem].ss = ss;
-	idt_entry_mnx_st[elem].res = 0;
-	idt_entry_mnx_st[elem].attr = attr;
-}
 
 static void set_idt(){
 	idt_ptr_mnx_st.bs = (u32)&idt_entry_mnx_st;
@@ -72,10 +59,25 @@ static void set_idt(){
 	load_idt_mnx((u32)&idt_ptr_mnx_st);
 }
 
-void set_idt_tbl(){
-	set_idt();
+/*
+ * Setting interrupt gates
+ * for interrupt vector list
+ * min: 0, max: 255
+ */
+void interrupt_desc_opt(u8 elem, u32 bs, u16 ss, u8 attr){
+	idt_entry_mnx_st[elem].bs_l = bs & 0xFFFF;
+	idt_entry_mnx_st[elem].bs_h = (bs >> 16) & 0xFFFF;
+
+	idt_entry_mnx_st[elem].ss = ss;
+	idt_entry_mnx_st[elem].res = 0;
+	idt_entry_mnx_st[elem].attr = attr;
 }
 
-void int_hndlr(){
-	printf("minux: interrupt handler\n");
+void set_idt_tbl(){
+	set_idt();
+	irq_set_interrupts();
+}
+
+void int_hndlr(struct int_stats_mnx int_stats){
+
 }
