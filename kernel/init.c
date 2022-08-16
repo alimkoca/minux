@@ -17,10 +17,6 @@ int init_proc(){
 	printf("minux: 32 bit paging\n");
 	bit32_pg_enable();
 
-	outb(0xa, 0xb);
-	if (inb(0xa) > 0){
-		printf("minux: perfect");
-	}
 	for (;;){
 		asm volatile ("hlt");
 	}
