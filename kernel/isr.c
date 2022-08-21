@@ -1,6 +1,7 @@
 #include <minux/isr.h>
 #include <minux/irq.h>
 #include <minux/io.h>
+#include <minux/syscall.h>
 #include <minux/video.h>
 #include <std/string.h>
 #include <std/type.h>
@@ -17,7 +18,8 @@ extern void load_idt_mnx(u32 idt_pointer_addr);
 struct idt_ptr_mnx idt_ptr_mnx_st;
 struct idt_entry_mnx idt_entry_mnx_st[256];
 
-static void set_idt(){
+static void set_idt()
+{
 	idt_ptr_mnx_st.bs = (u32)&idt_entry_mnx_st;
 	idt_ptr_mnx_st.lim = sizeof(struct idt_entry_mnx)*256-1;
 
@@ -64,7 +66,8 @@ static void set_idt(){
  * for interrupt vector list
  * min: 0, max: 255
  */
-void interrupt_desc_opt(u8 elem, u32 bs, u16 ss, u8 attr){
+void interrupt_desc_opt(u8 elem, u32 bs, u16 ss, u8 attr)
+{
 	idt_entry_mnx_st[elem].bs_l = bs & 0xFFFF;
 	idt_entry_mnx_st[elem].bs_h = (bs >> 16) & 0xFFFF;
 
@@ -73,11 +76,20 @@ void interrupt_desc_opt(u8 elem, u32 bs, u16 ss, u8 attr){
 	idt_entry_mnx_st[elem].attr = attr;
 }
 
-void set_idt_tbl(){
+void set_idt_tbl()
+{
 	set_idt();
 	irq_set_interrupts();
 }
 
-void int_hndlr(struct int_stats_mnx int_stats){
+void int_hndlr(struct int_stats_mnx int_stats)
+{
+	if (syscall_hndlr(&int_stats) < 0) {
+		hndl_int(&int_stats);
+	}
+}
 
+void hndl_int(struct int_stats_mnx *int_stats)
+{
+	
 }

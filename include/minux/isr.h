@@ -47,6 +47,8 @@ void set_idt_tbl();
  */
 void interrupt_desc_opt(u8 elem, u32 bs, u16 ss, u8 attr);
 
+void hndl_int(struct int_stats_mnx *int_stats);
+
 extern void int_elem_0();
 extern void int_elem_1();
 extern void int_elem_2();

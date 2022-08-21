@@ -1,15 +1,19 @@
 #include <minux/irq.h>
 #include <minux/isr.h>
+#include <minux/syscall.h>
 #include <minux/io.h>
 #include <minux/video.h>
 #include <std/type.h>
+
+irq_mnx irq_vector[256];
 
 /*
  * This is remapping of irq table for
  * mapping interrupts to interrupt
  * descriptor table
  */
-static void irq_remap_table(){
+static void irq_remap_table()
+{
         // Sending ICW1 to master and slave
         outb(PIC_MASTER_COMMAND, ICW1);
         outb(PIC_SLAVE_COMMAND, ICW1);
@@ -32,7 +36,8 @@ static void irq_remap_table(){
         outb(PIC_MASTER_DATA, 0x00);
 }
 
-void irq_set_interrupts(){
+void irq_set_interrupts()
+{
         irq_remap_table();
 
         interrupt_desc_opt(32, (u32)irq_elem_0, 0x08, 0x8e);
@@ -53,6 +58,22 @@ void irq_set_interrupts(){
         interrupt_desc_opt(47, (u32)irq_elem_15, 0x08, 0x8e);        
 }
 
-int irq_hndlr(struct int_stats_mnx irq_stats){
-	printf("Hello, world!");
+void set_irq_hndlr(u8 n, irq_mnx hndlr)
+{
+	irq_vector[n] = hndlr;
+}
+
+int irq_hndlr(struct int_stats_mnx irq_stats)
+{
+	if (irq_stats.int_n >= 40) {
+		outb(0x0A, 0x20);
+	}
+
+	outb(0x20, 0x20);
+
+	if (irq_vector[irq_stats.int_n] > 0) {
+		irq_mnx hndlr = irq_vector[irq_stats.int_n];
+		hndlr(irq_stats);
+	}
+
 }

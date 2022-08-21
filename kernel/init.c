@@ -1,5 +1,6 @@
 #include <minux/init.h>
 #include <minux/isr.h>
+#include <minux/timer.h>
 #include <minux/io.h>
 #include <minux/mem.h>
 #include <minux/vmem.h>
@@ -16,6 +17,8 @@ int init_proc(){
 	// Enable paging and virtual memory
 	printf("minux: 32 bit paging\n");
 	bit32_pg_enable();
+
+	init_timer_int(100);
 
 	for (;;){
 		asm volatile ("hlt");
